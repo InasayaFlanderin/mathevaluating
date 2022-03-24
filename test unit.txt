@@ -1,0 +1,17 @@
+Input : 1+1
+Expected Output: 1 1 +
+Actual Output: 1 1 +
+
+Input : (1 + 1)
+Expected Output: 1 1 +
+Actual Output: 1 1 +
+
+Input : 1*2+3
+Expected Output: 1 2 * 3 +
+Actual Output: 1 2 * 3 +
+
+Input : 1*2+3^4
+Expected Output: 1 2 * 3 4 ^ +
+Actual Output: 1 2 * 3 + 4 ^
+
+
