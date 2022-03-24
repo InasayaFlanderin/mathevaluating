@@ -42,6 +42,7 @@ class Operator implements Token {
 
 	public Operator(char name, int precedence) {
 		this.name = name;
+		this.precedence = precedence;
 	}
 
 	public String toString() {
