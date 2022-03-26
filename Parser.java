@@ -20,7 +20,7 @@ public class Parser {
 	public Node parse(Stack<Token> rpn) {
 		Token nodeI = rpn.pop();
 
-		if(nodeI.getType().equals("Constant") || currentToken.getType().equals("Variable")) {
+		if(nodeI.getType().equals("Constant") || nodeI.getType().equals("Variable")) {
 			return (Node) nodeI;
 		} else {
 			if(nodeI.getType().equals("Method")) {
