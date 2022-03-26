@@ -8,19 +8,21 @@ import Matheval.Parser;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Queue;
+import java.util.Stack;
 
 public class Mathevali {
 	private static void execute(String inputs) {
 		String source = inputs.replace(" ", "").replace("π", "pi").replace("∞", "infinity").replace("√", "sqrt").replace("squareroot", "sqrt");
 		Lexer lexer = new Lexer(source);
 		List<Token> tokens = lexer.scan();
-		Parser parser = new Parser(tokens);
-		Queue<Token> rpn = parser.rpn();
 
-		while(!rpn.isEmpty()) {
-			System.out.println(rpn.remove().toString());
+		if(tokens.isEmpty()) {
+			return;
 		}
+
+		Parser parser = new Parser(tokens);
+		Node node = parser.parse();
+		System.out.println(node.toString());
 	}
 
 	public static void main(String[] args) {

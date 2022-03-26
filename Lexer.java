@@ -158,7 +158,6 @@ public class Lexer {
 					advanced();
 					break;
 				case '^':
-				case '!':
 					tokens.add(new Operator(this.currentChar, 3));
 					advanced();
 					break;

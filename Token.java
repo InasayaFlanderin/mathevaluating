@@ -6,7 +6,11 @@ interface Token {
 	public String getType();
 }
 
-class Complex implements Token {
+interface Node {
+	public String toString();
+}
+
+class Complex implements Token, Node {
 	private double real;
 	private double imaginary;
 
@@ -42,6 +46,7 @@ class Operator implements Token {
 
 	public Operator(char name, int precedence) {
 		this.name = name;
+		this.precedence = precedence;
 	}
 
 	public String toString() {
@@ -81,8 +86,9 @@ class Method implements Token {
 	}
 }
 
-class Symbol implements Token {
+class Symbol implements Token, Node {
 	private char name;
+	private Node value;
 
 	public Symbol(char name) {
 		this.name = name;
@@ -98,5 +104,77 @@ class Symbol implements Token {
 
 	public String getType() {
 		return "Variable";
+	}
+
+	public void setValue(Node value) {
+		this.value = value;
+	}
+
+	public Complex getValue() {
+		return (Complex) this.value;
+	}
+}
+
+class OperatorNode implements Node {
+	private Node right;
+	private Operator operator;
+	private Node left;
+
+	public OperatorNode(Operator operator) {
+		this.operator = operator;
+	}
+
+	public void setNode(Node right, Node left) {
+		this.right = right;
+		this.left = left;
+	}
+
+	public void setRight(Node right) {
+		this.right = right;
+	}
+
+	public void setLeft(Node left) {
+		this.left = left;
+	}
+
+	public Node getRight() {
+		return this.right;
+	}
+
+	public Node getLeft() {
+		return this.left;
+	}
+
+	public Operator getOperator() {
+		return this.operator;
+	}
+
+	public String toString() {
+		return "{ \n\t Operator: " + this.operator.toString() + "\n\t right: " + right.toString() + "\n\t left: " + left.toString() + "\n}";
+	}
+}
+
+class MethodNode implements Node {
+	private Method name;
+	private Node value;
+
+	public MethodNode(Method name) {
+		this.name = name;
+	}
+
+	public void setNode(Node value) {
+		this.value = value;
+	}
+
+	public String getName() {
+		return this.name.toString();
+	}
+
+	public Node getValue() {
+		return this.value;
+	}
+
+	public String toString() {
+		return "{ \n\t Method: " + getName() + "\n\t value: " + this.value.toString() + "\n}";
 	}
 }
