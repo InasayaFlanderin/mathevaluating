@@ -17,8 +17,7 @@ public class Parser {
 		this.currentToken = null;
 	}
 
-	public Node parse() {
-		Stack<Token> tokens = rpn();
+	public Node parse(Stack<Token> rpn) {
 		Token nodeI = tokens.pop();
 
 		if(nodeI.getType().equals("Constant") || currentToken.getType().equals("Variable")) {
@@ -36,7 +35,7 @@ public class Parser {
 		}
 	}
 
-	private Stack<Token> rpn() {
+	public Stack<Token> rpn() {
 		Stack<Token> rpn = new Stack<Token>();
 		Stack<Token> operator = new Stack<Token>();
 

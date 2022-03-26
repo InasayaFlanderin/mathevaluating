@@ -16,12 +16,18 @@ public class Mathevali {
 		Lexer lexer = new Lexer(source);
 		List<Token> tokens = lexer.scan();
 
-		if(tokens.isEmpty()) {
+		if(tokens.isEmpty() || tokens == null) {
 			return;
 		}
 
 		Parser parser = new Parser(tokens);
-		Node node = parser.parse();
+		Stack<Token> rpn = parser.rpn();
+
+		if(rpn.isEmpty || rpn == null) {
+			return;
+		}
+
+		Node node = parser.parse(rpn);
 		System.out.println(node.toString());
 	}
 
