@@ -23,7 +23,7 @@ public class Mathevali {
 		Parser parser = new Parser(tokens);
 		Stack<Token> rpn = parser.rpn();
 
-		if(rpn.isEmpty || rpn == null) {
+		if(rpn.isEmpty() || rpn == null) {
 			return;
 		}
 

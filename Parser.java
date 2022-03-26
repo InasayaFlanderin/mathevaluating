@@ -18,18 +18,18 @@ public class Parser {
 	}
 
 	public Node parse(Stack<Token> rpn) {
-		Token nodeI = tokens.pop();
+		Token nodeI = rpn.pop();
 
 		if(nodeI.getType().equals("Constant") || currentToken.getType().equals("Variable")) {
 			return (Node) nodeI;
 		} else {
 			if(nodeI.getType().equals("Method")) {
 				MethodNode method = new MethodNode((Method) nodeI);
-				fillMethod(method, tokens);
+				fillMethod(method, rpn);
 				return method;
 			} else {
 				OperatorNode operator = new OperatorNode((Operator) nodeI);
-				fillOperator(operator, tokens);
+				fillOperator(operator, rpn);
 				return operator;
 			}
 		}
@@ -97,53 +97,53 @@ public class Parser {
 		return rpn;
 	}
 
-	private void fillMethod(MethodNode method, Stack<Token> tokens) {
-		Token nodeI = tokens.pop();
+	private void fillMethod(MethodNode method, Stack<Token> rpn) {
+		Token nodeI = rpn.pop();
 
 		if(nodeI.getType().equals("Constant") || nodeI.getType().equals("Variable")) {
 			method.setNode((Node) nodeI);
 		} else {
 			if(nodeI.getType().equals("Method")) {
 				MethodNode imethod = new MethodNode((Method) nodeI);
-				fillMethod(imethod, tokens);
+				fillMethod(imethod, rpn);
 				method.setNode(imethod);
 			} else {
 				OperatorNode operator = new OperatorNode((Operator) nodeI);
-				fillOperator(operator, tokens);
+				fillOperator(operator, rpn);
 				method.setNode(operator);
 			}
 		}
 	}
 
-	private void fillOperator(OperatorNode operator, Stack<Token> tokens) {
-		Token right = tokens.pop();
+	private void fillOperator(OperatorNode operator, Stack<Token> rpn) {
+		Token right = rpn.pop();
 
 		if(right.getType().equals("Constant") || right.getType().equals("Variable")) {
 			operator.setRight((Node) right);
 		} else {
 			if(right.getType().equals("Method")) {
 				MethodNode method = new MethodNode((Method) right);
-				fillMethod(method, tokens);
+				fillMethod(method, rpn);
 				operator.setRight(method);
 			} else {
 				OperatorNode ioperator = new OperatorNode((Operator) right);
-				fillOperator(ioperator, tokens);
+				fillOperator(ioperator, rpn);
 				operator.setRight(ioperator);
 			}
 		}
 
-		Token left = tokens.pop();
+		Token left = rpn.pop();
 
 		if(left.getType().equals("Constant") || left.getType().equals("Variable")) {
 			operator.setLeft((Node) left);
 		} else {
 			if(left.getType().equals("Method")) {
 				MethodNode method = new MethodNode((Method) left);
-				fillMethod(method, tokens);
+				fillMethod(method, rpn);
 				operator.setLeft(method);
 			} else {
 				OperatorNode ioperator = new OperatorNode((Operator) left);
-				fillOperator(ioperator, tokens);
+				fillOperator(ioperator, rpn);
 				operator.setLeft(ioperator);
 			}
 		}
